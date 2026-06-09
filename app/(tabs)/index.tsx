@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useContext } from 'react';
-import { DataContext } from '@/src/context/DataContext';
+import { useEffect } from 'react';
 import {
   ThermometerIcon,
   DropHalfIcon,
@@ -21,21 +20,55 @@ import {
 import WeatherMap from '@/src/components/weatherMap';
 import { weatherIconMap } from '@/src/components/icons';
 import { weatherImageMap } from '@/src/components/imgs';
+import { useResponseStore } from '@/src/store/useResponseStore';
+import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
 
 export default function Index() {
-  const context = useContext(DataContext);
+  const placeNameText = usePlaceNameStore((state) => state.placeNameText);
+  const setPlaceNameText = usePlaceNameStore((state) => state.setPlaceNameText);
+  const placeName = usePlaceNameStore((state) => state.placeName);
+  const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
+  const setLastPlaceName = usePlaceNameStore((state) => state.setLastPlaceName);
+
+  const getResponse = useResponseStore((state) => state.getResponse);
+
+  const city = useResponseStore((state) => state.response?.city.name);
+  const temp = useResponseStore((state) => state.response?.list[0].main.temp);
+  const feelsLike = useResponseStore(
+    (state) => state.response?.list[0].main.feels_like,
+  );
+  const humidity = useResponseStore(
+    (state) => state.response?.list[0].main.humidity,
+  );
+  const main = useResponseStore(
+    (state) => state.response?.list[0].weather[0].main,
+  );
+  const condition = useResponseStore(
+    (state) => state.response?.list[0].weather[0].description,
+  );
+  const wind = useResponseStore((state) => state.response?.list[0].wind.speed);
+  const iconId = useResponseStore(
+    (state) => state.response?.list[0].weather[0].icon,
+  );
+  const lat = useResponseStore((state) => state.response?.city.coord.lat);
+  const lon = useResponseStore((state) => state.response?.city.coord.lon);
+
   const IconComponent =
-    weatherIconMap[context?.iconId as keyof typeof weatherIconMap] ||
-    CloudWarningIcon;
+    weatherIconMap[iconId as keyof typeof weatherIconMap] || CloudWarningIcon;
   const WeatherImage =
-    weatherImageMap[context?.iconId as keyof typeof weatherImageMap] ||
+    weatherImageMap[iconId as keyof typeof weatherImageMap] ||
     require('../../images/err.png');
 
   const submitCity = () => {
-    context?.setPlaceName(context.placeNameText);
-    context?.setLastPlaceName(context.placeNameText);
-    context?.setPlaceNameText('');
+    setPlaceName(placeNameText);
+    setLastPlaceName(placeNameText);
+    getResponse();
+    setPlaceNameText('');
   };
+
+  useEffect(() => {
+    getResponse();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -43,7 +76,7 @@ export default function Index() {
         <View style={styles.header}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <IconComponent size={24} weight="fill" color="#313131" />
-            <Text style={styles.dateText}>{context?.city}</Text>
+            <Text style={styles.dateText}>{city}</Text>
           </View>
         </View>
 
@@ -67,8 +100,8 @@ export default function Index() {
                     padding: 8,
                   }}
                   placeholder="Enter place name"
-                  onChangeText={(text) => context?.setPlaceNameText(text)}
-                  value={context?.placeNameText}
+                  onChangeText={(text) => setPlaceNameText(text)}
+                  value={placeNameText}
                 />
                 <TouchableOpacity
                   onPress={submitCity}
@@ -82,9 +115,9 @@ export default function Index() {
                 </TouchableOpacity>
               </View>
 
-              <Text style={styles.upperInfoMainText}>{context?.main}</Text>
+              <Text style={styles.upperInfoMainText}>{main}</Text>
 
-              <Text style={styles.upperInfoDescText}>{context?.condition}</Text>
+              <Text style={styles.upperInfoDescText}>{condition}</Text>
             </View>
 
             <View style={styles.weatherInfo}>
@@ -96,18 +129,18 @@ export default function Index() {
                     style={{
                       fontSize: 50,
                       color:
-                        typeof context?.temp === 'number' && context.temp > 0
+                        typeof temp === 'number' && temp > 0
                           ? '#B65050'
                           : '#5074B6',
                     }}
                   >
-                    {Math.round(context?.temp ?? 0)}
+                    {Math.round(temp ?? 0)}
                   </Text>
                   <ThermometerIcon
                     size={36}
                     weight="fill"
                     color={
-                      typeof context?.temp === 'number' && context.temp > 0
+                      typeof temp === 'number' && temp > 0
                         ? '#B65050'
                         : '#5074B6'
                     }
@@ -137,7 +170,7 @@ export default function Index() {
                       fontSize: 20,
                     }}
                   >
-                    {`${Math.round(context?.feelsLike ?? 0)} C`}
+                    {`${Math.round(feelsLike ?? 0)} C`}
                   </Text>
                 </View>
               </View>
@@ -164,7 +197,7 @@ export default function Index() {
                     fontSize: 22,
                   }}
                 >
-                  {context?.humidity ?? 0}%
+                  {humidity ?? 0}%
                 </Text>
               </View>
 
@@ -184,17 +217,17 @@ export default function Index() {
                     fontSize: 22,
                   }}
                 >
-                  {context?.wind ?? 0} km/h
+                  {wind ?? 0} km/h
                 </Text>
               </View>
             </View>
 
             <View style={styles.map}>
               <WeatherMap
-                latitude={context?.lat ?? 0}
-                longitude={context?.lon ?? 0}
-                cityName={context?.city ?? 'Wait'}
-                temp={Math.round(context?.temp ?? 0)}
+                latitude={lat ?? 0}
+                longitude={lon ?? 0}
+                cityName={city ?? 'Wait'}
+                temp={Math.round(temp ?? 0)}
               />
             </View>
           </View>
