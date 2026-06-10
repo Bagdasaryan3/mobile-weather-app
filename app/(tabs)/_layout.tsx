@@ -3,6 +3,7 @@ import {
   CloudSunIcon,
   BooksIcon,
   CalendarDotsIcon,
+  GearFineIcon,
 } from 'phosphor-react-native';
 
 export default function TabsLayout() {
@@ -37,6 +38,15 @@ export default function TabsLayout() {
         options={{
           title: 'Book',
           tabBarIcon: ({ color }) => <BooksIcon color={color} weight="fill" />,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color }) => (
+            <GearFineIcon color={color} weight="regular" />
+          ),
         }}
       />
     </Tabs>

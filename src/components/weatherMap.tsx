@@ -1,36 +1,30 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { useResponseStore } from '../store/useResponseStore';
 
 interface WeatherMapProps {
-  latitude: number;
-  longitude: number;
   cityName: string;
   temp: number;
 }
 
-export default function WeatherMap({
-  latitude,
-  longitude,
-  cityName,
-  temp,
-}: WeatherMapProps) {
+export default function WeatherMap({ cityName, temp }: WeatherMapProps) {
+  const lat = useResponseStore((state) => state.response?.city.coord.lat);
+  const lon = useResponseStore((state) => state.response?.city.coord.lon);
+
   return (
-    <View style={styles.container}>
+    <View style={styles.mapContainer}>
       <MapView
         style={styles.map}
-        //scrollEnabled={false}
-        // Регион определяет, какая область земли сейчас показана на экране
         region={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.8, // Отвечает за масштаб (выше число — дальше зум)
+          latitude: lat ?? 0,
+          longitude: lon ?? 0,
+          latitudeDelta: 0.8,
           longitudeDelta: 0.1,
         }}
       >
-        {/* Ставим маркер на сам город */}
         <Marker
-          coordinate={{ latitude, longitude }}
+          coordinate={{ latitude: lat ?? 0, longitude: lon ?? 0 }}
           title={cityName}
           description={`${temp}C`}
         />
@@ -40,12 +34,16 @@ export default function WeatherMap({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%', // Выделяем фиксированную область под карту на экране
+  mapContainer: {
     width: '100%',
+    height: 450,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'white',
+    backgroundColor: '#FAFAFA',
+    alignItems: 'center',
+    justifyContent: 'center',
     overflow: 'hidden',
-    marginVertical: 15,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

@@ -1,12 +1,43 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useResponseStore } from '@/src/store/useResponseStore';
+import { CalendarDotsIcon } from 'phosphor-react-native';
+import ForecastCard from '@/src/components/forecastCard';
+import { useState } from 'react';
 
 const Forecast = () => {
+  const cityName = useResponseStore((state) => state.response?.city.name);
+  const forecastList = useResponseStore((state) => state.response?.list);
+
   return (
     <View style={styles.container}>
       <SafeAreaView edges={['top']}>
-        <View>
-          <Text style={styles.dateText}>Forecast</Text>
+        <View style={styles.header}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <CalendarDotsIcon size={24} weight="fill" color="#313131" />
+            <Text style={styles.dateText}>{`Forecast for ${cityName}`}</Text>
+          </View>
+        </View>
+
+        <View style={styles.forecastContainer}>
+          <FlatList
+            style={{ width: '100%' }}
+            showsVerticalScrollIndicator={false}
+            data={forecastList}
+            renderItem={({ item }) => (
+              <ForecastCard
+                dt={item.dt}
+                main={item.main}
+                weather={item.weather}
+                clouds={item.clouds}
+                wind={item.wind}
+                visibility={item.visibility}
+                pop={item.pop}
+                sys={item.sys}
+                dt_txt={item.dt_txt}
+              />
+            )}
+          />
         </View>
       </SafeAreaView>
     </View>
@@ -29,68 +60,12 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     color: '#313131',
   },
-  weatherContainer: {
+  forecastContainer: {
     width: '100%',
     height: '100%',
     gap: 12,
     alignItems: 'center',
-    paddingBottom: 60,
-  },
-  map: {
-    width: '100%',
-    height: 350,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'white',
-    backgroundColor: '#FAFAFA',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  upperInfo: {
-    width: '100%',
-    padding: 10,
-    borderRadius: 20,
-    gap: 4,
-    borderWidth: 1,
-    borderColor: 'white',
-    backgroundColor: '#FAFAFA',
-  },
-  upperInfoMainText: {
-    fontSize: 24,
-    fontWeight: 500,
-    color: '#313131',
-  },
-  upperInfoDescText: {
-    fontSize: 16,
-    color: '#848484',
-  },
-  weatherInfo: {
-    width: '100%',
-    /*backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: 'white',*/
-    borderRadius: 20,
-    padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  infoCard: {
-    gap: 6,
-    width: '100%',
-    borderWidth: 1,
-    flexDirection: 'row',
-    borderColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#FAFAFA',
-    height: 70,
-    padding: 12,
-    borderRadius: 20,
-  },
-  infoCardText: {
-    fontSize: 18,
-    fontWeight: 500,
+    paddingBottom: 80,
   },
 });
 

@@ -37,7 +37,7 @@ interface SysData {
 }
 
 // 2. Описание одного элемента из массива list (одна точка времени из 40)
-interface WeatherForecastItem {
+export interface WeatherForecastItem {
   dt: number;
   main: MainWeatherData;
   weather: WeatherCondition[]; // Массив, потому что сервер так отдает
