@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   dateText: {
     fontSize: 24,

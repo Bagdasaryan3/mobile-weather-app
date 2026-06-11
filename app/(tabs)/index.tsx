@@ -102,15 +102,30 @@ export default function Index() {
                     <PersonSimpleSwimIcon
                       weight="regular"
                       size={20}
-                      color="#cc9797"
+                      color={
+                        typeof temp === 'number' && temp > 0
+                          ? '#cc9797'
+                          : '#97a8cc'
+                      }
                     />
-                    <Text style={{ fontSize: 16, color: '#cc9797' }}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color:
+                          typeof temp === 'number' && temp > 0
+                            ? '#cc9797'
+                            : '#97a8cc',
+                      }}
+                    >
                       Feels like
                     </Text>
                   </View>
                   <Text
                     style={{
-                      color: '#cc9797',
+                      color:
+                        typeof temp === 'number' && temp > 0
+                          ? '#cc9797'
+                          : '#97a8cc',
                       fontWeight: '500',
                       fontSize: 20,
                     }}
@@ -161,6 +176,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   dateText: {
     fontSize: 24,
