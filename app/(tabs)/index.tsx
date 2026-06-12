@@ -15,16 +15,22 @@ import {
   PersonSimpleSwimIcon,
   CloudWarningIcon,
   WindIcon,
+  MapPinAreaIcon,
 } from 'phosphor-react-native';
 import WeatherMap from '@/src/components/weatherMap';
 import { weatherIconMap } from '@/src/data/icons';
 import { weatherImageMap } from '@/src/data/imgs';
 import { useResponseStore } from '@/src/store/useResponseStore';
+import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
 import UpperInfo from '@/src/components/upperInfo';
 import InfoCard from '@/src/components/infoCard';
 
 export default function Index() {
   const getResponse = useResponseStore((state) => state.getResponse);
+
+  const placeName = usePlaceNameStore((state) => state.placeName);
+
+  const getLocation = usePlaceNameStore((state) => state.getLocation);
 
   const city = useResponseStore((state) => state.response?.city.name);
   const temp = useResponseStore((state) => state.response?.list[0].main.temp);
@@ -47,6 +53,7 @@ export default function Index() {
     require('../../images/err.png');
 
   useEffect(() => {
+    getLocation();
     getResponse();
   }, []);
 
@@ -58,6 +65,23 @@ export default function Index() {
             <IconComponent size={24} weight="fill" color="#313131" />
             <Text style={styles.dateText}>{city}</Text>
           </View>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              backgroundColor: '#5d8cd8',
+              height: 35,
+              width: 35,
+              borderRadius: '50%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              getLocation();
+              getResponse();
+            }}
+          >
+            <MapPinAreaIcon size={20} />
+          </TouchableOpacity>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>

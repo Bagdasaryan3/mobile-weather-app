@@ -19,7 +19,7 @@ const Book = () => {
               color: '#313131',
             }}
           >
-            {`Арсен уже активно работает над этой страницей :)`}
+            {`Arsen is working on this page right now :)`}
           </Text>
         </View>
       </SafeAreaView>
