@@ -24,58 +24,21 @@ const ForecastCard = (props: WeatherForecastItem) => {
 
   return (
     <View style={styles.card}>
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 6,
-        }}
-      >
+      <View style={styles.forecastDate}>
         <ClockIcon size={18} color="#172c3d" weight="bold" />
-        <Text style={{ color: '#172c3d', fontWeight: 600, fontSize: 18 }}>
-          {dt_txt}
-        </Text>
+        <Text style={styles.forecastDateText}>{dt_txt}</Text>
       </View>
 
-      <View
-        style={{
-          gap: 6,
-          backgroundColor: '#fff',
-          borderRadius: 20,
-          padding: 12,
-        }}
-      >
-        <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+      <View style={styles.weatherInfo}>
+        <View style={styles.mainDescription}>
           <IconComponent size={20} weight="fill" color="#313131" />
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 500,
-              color: '#313131',
-            }}
-          >
-            {weather[0].main}
-          </Text>
+          <Text style={styles.mainDescriptionText}>{weather[0].main}</Text>
         </View>
-        <Text
-          style={{
-            fontSize: 15,
-            color: '#848484',
-          }}
-        >
-          {weather[0].description}
-        </Text>
+
+        <Text style={styles.description}>{weather[0].description}</Text>
       </View>
 
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
+      <View style={styles.tempInfoContainer}>
         <View style={{ padding: 10 }}>
           <Text
             style={{
@@ -84,7 +47,7 @@ const ForecastCard = (props: WeatherForecastItem) => {
             }}
           >{`${Math.round(main.temp)}°`}</Text>
 
-          <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+          <View style={styles.feelsLikeContainer}>
             <PersonSimpleSwimIcon
               weight="regular"
               size={18}
@@ -102,10 +65,7 @@ const ForecastCard = (props: WeatherForecastItem) => {
             >{`Feels Like ${Math.round(main.feels_like)}°`}</Text>
           </View>
         </View>
-        <Image
-          source={WeatherImage}
-          style={{ height: 120, width: 120, resizeMode: 'contain' }}
-        />
+        <Image source={WeatherImage} style={styles.weatherImage} />
       </View>
 
       <ForecastInfoCard
@@ -124,10 +84,6 @@ const ForecastCard = (props: WeatherForecastItem) => {
   );
 };
 
-/**    
-            <Text>{weather[0].main}</Text>
-      <Text>{weather[0].description}</Text>*/
-
 const styles = StyleSheet.create({
   card: {
     padding: 12,
@@ -138,6 +94,56 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 20,
     gap: 12,
+  },
+
+  forecastDate: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  forecastDateText: {
+    color: '#172c3d',
+    fontWeight: 600,
+    fontSize: 18,
+  },
+
+  weatherInfo: {
+    gap: 6,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 12,
+  },
+  mainDescription: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  mainDescriptionText: {
+    fontSize: 20,
+    fontWeight: 500,
+    color: '#313131',
+  },
+  description: {
+    fontSize: 15,
+    color: '#848484',
+  },
+
+  tempInfoContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  feelsLikeContainer: {
+    flexDirection: 'row',
+    gap: 6,
+    alignItems: 'center',
+  },
+  weatherImage: {
+    height: 120,
+    width: 120,
+    resizeMode: 'contain',
   },
 });
 

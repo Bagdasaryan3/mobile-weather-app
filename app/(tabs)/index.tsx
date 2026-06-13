@@ -29,6 +29,8 @@ export default function Index() {
   const getResponse = useResponseStore((state) => state.getResponse);
 
   const placeName = usePlaceNameStore((state) => state.placeName);
+  const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
+  const locationName = usePlaceNameStore((state) => state.locationName);
 
   const getLocation = usePlaceNameStore((state) => state.getLocation);
 
@@ -61,22 +63,15 @@ export default function Index() {
     <View style={styles.container}>
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <View style={styles.headerTextContainer}>
             <IconComponent size={24} weight="fill" color="#313131" />
             <Text style={styles.dateText}>{city}</Text>
           </View>
+
           <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              backgroundColor: '#5d8cd8',
-              height: 35,
-              width: 35,
-              borderRadius: '50%',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            style={styles.returnToLocationBtn}
             onPress={() => {
-              getLocation();
+              setPlaceName(locationName);
               getResponse();
             }}
           >
@@ -90,9 +85,7 @@ export default function Index() {
 
             <View style={styles.weatherInfo}>
               <View style={{ gap: 10 }}>
-                <View
-                  style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}
-                >
+                <View style={styles.tempInfoContainer}>
                   <Text
                     style={{
                       fontSize: 50,
@@ -114,54 +107,30 @@ export default function Index() {
                     }
                   />
                 </View>
-
-                <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 8,
-                    }}
-                  >
-                    <PersonSimpleSwimIcon
-                      weight="regular"
-                      size={20}
-                      color={
-                        typeof temp === 'number' && temp > 0
-                          ? '#cc9797'
-                          : '#97a8cc'
-                      }
-                    />
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        color:
-                          typeof temp === 'number' && temp > 0
-                            ? '#cc9797'
-                            : '#97a8cc',
-                      }}
-                    >
-                      Feels like
-                    </Text>
-                  </View>
+                <View style={styles.feelsLikeTextContainer}>
+                  <PersonSimpleSwimIcon
+                    weight="regular"
+                    size={20}
+                    color={
+                      typeof temp === 'number' && temp > 0
+                        ? '#cc9797'
+                        : '#97a8cc'
+                    }
+                  />
                   <Text
                     style={{
+                      fontSize: 16,
                       color:
                         typeof temp === 'number' && temp > 0
                           ? '#cc9797'
                           : '#97a8cc',
-                      fontWeight: '500',
-                      fontSize: 20,
                     }}
                   >
-                    {`${Math.round(feelsLike ?? 0)} °`}
+                    {`Feels like ${Math.round(feelsLike ?? 0)}°`}
                   </Text>
                 </View>
               </View>
-              <Image
-                style={{ width: 150, height: 150, resizeMode: 'contain' }}
-                source={WeatherImage}
-              />
+              <Image style={styles.weatherImage} source={WeatherImage} />
             </View>
 
             <View style={{ gap: 12, width: '100%' }}>
@@ -202,10 +171,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  headerTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   dateText: {
     fontSize: 24,
     fontWeight: 700,
     color: '#313131',
+  },
+  returnToLocationBtn: {
+    flexDirection: 'row',
+    backgroundColor: '#5d8cd8',
+    height: 35,
+    width: 35,
+    borderRadius: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   weatherContainer: {
     width: '100%',
@@ -221,5 +204,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  tempInfoContainer: {
+    flexDirection: 'row',
+    gap: 4,
+    alignItems: 'center',
+  },
+  feelsLikeTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  weatherImage: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
   },
 });

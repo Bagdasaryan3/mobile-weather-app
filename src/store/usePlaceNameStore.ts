@@ -5,8 +5,10 @@ interface IPlaceNameStore {
   placeNameText: string;
   placeName: string;
   lastPlaceName: string;
+  locationName: string;
 
   getLocation: () => void;
+  setLocationName: (name: string) => void;
   setPlaceNameText: (name: string) => void;
   setPlaceName: (name: string) => void;
   setLastPlaceName: (name: string) => void;
@@ -16,7 +18,9 @@ const usePlaceNameStore = create<IPlaceNameStore>((set) => ({
   placeNameText: '',
   placeName: 'new york',
   lastPlaceName: '',
+  locationName: 'new york',
 
+  setLocationName: (name) => set({ locationName: name }),
   setPlaceNameText: (name) => set({ placeNameText: name }),
   setPlaceName: (name) => set({ placeName: name }),
   setLastPlaceName: (name) => set({ lastPlaceName: name }),
@@ -58,10 +62,10 @@ const usePlaceNameStore = create<IPlaceNameStore>((set) => ({
         address.region ||
         'Unknown location';
 
-      set({ placeName: name });
+      set({ locationName: name });
     } catch (error) {
       console.error('Turn on Location. Getting location went wrong', error);
-      set({ placeName: 'new york' });
+      set({ locationName: 'new york' });
       return;
     }
   },

@@ -13,7 +13,7 @@ const Forecast = () => {
     <View style={styles.container}>
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <View style={styles.headerTextContainer}>
             <CalendarDotsIcon size={24} weight="fill" color="#313131" />
             <Text style={styles.dateText}>{`Forecast for ${cityName}`}</Text>
           </View>
@@ -55,6 +55,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  headerTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   dateText: {
     fontSize: 24,

@@ -16,17 +16,12 @@ export default function ForecastInfoCard({
 }: IProps) {
   return (
     <View style={styles.infoCard}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+      <View style={styles.infoCardTextContainer}>
         <WeatherIcon weight="fill" size={18} color={color} />
         <Text style={{ ...styles.infoCardText, color: color }}>{text}</Text>
       </View>
-      <Text
-        style={{
-          color: color,
-          fontWeight: '600',
-          fontSize: 18,
-        }}
-      >
+
+      <Text style={{ ...styles.weatherInfoText, color: color }}>
         {infoText}
       </Text>
     </View>
@@ -45,8 +40,17 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 20,
   },
+  infoCardTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   infoCardText: {
     fontSize: 16,
     fontWeight: 500,
+  },
+  weatherInfoText: {
+    fontWeight: '600',
+    fontSize: 18,
   },
 });
