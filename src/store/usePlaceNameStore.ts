@@ -63,6 +63,7 @@ const usePlaceNameStore = create<IPlaceNameStore>((set) => ({
         'Unknown location';
 
       set({ locationName: name });
+      set({ placeName: name });
     } catch (error) {
       console.error('Turn on Location. Getting location went wrong', error);
       set({ locationName: 'new york' });

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -56,8 +55,11 @@ export default function Index() {
 
   useEffect(() => {
     getLocation();
+  });
+
+  useEffect(() => {
     getResponse();
-  }, []);
+  }, [locationName]);
 
   return (
     <View style={styles.container}>
