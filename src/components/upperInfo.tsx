@@ -56,9 +56,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     gap: 4,
-    borderWidth: 1,
-    borderColor: 'white',
-    backgroundColor: '#FAFAFA',
+
+    backgroundColor: '#f9f9f9',
   },
 
   placeSearchField: {

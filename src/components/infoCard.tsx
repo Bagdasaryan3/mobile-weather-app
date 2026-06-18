@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
   infoCard: {
     gap: 6,
     width: '100%',
-    borderWidth: 1,
+    /*borderWidth: 1,
+    borderColor: 'white',*/
     flexDirection: 'row',
-    borderColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#F9F9F9',
     height: 70,
     padding: 12,
     borderRadius: 20,

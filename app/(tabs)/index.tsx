@@ -23,11 +23,17 @@ import { useResponseStore } from '@/src/store/useResponseStore';
 import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
 import UpperInfo from '@/src/components/upperInfo';
 import InfoCard from '@/src/components/infoCard';
+import Mock from '@/src/components/mock';
+import { StatusBar } from 'react-native';
 
 export default function Index() {
+  StatusBar.setBarStyle('dark-content');
+  StatusBar.setBackgroundColor('#000');
+
   const getResponse = useResponseStore((state) => state.getResponse);
 
-  const placeName = usePlaceNameStore((state) => state.placeName);
+  const responseStatus = useResponseStore((state) => state.responseStatus);
+
   const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
   const locationName = usePlaceNameStore((state) => state.locationName);
 
@@ -64,6 +70,10 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <SafeAreaView edges={['top']}>
+        <StatusBar
+          barStyle="dark-content" // иконки чёрные (и iOS тоже)
+        />
+
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
             <IconComponent size={24} weight="fill" color="#313131" />
@@ -77,85 +87,92 @@ export default function Index() {
               getResponse();
             }}
           >
-            <MapPinAreaIcon size={20} />
+            <MapPinAreaIcon size={20} color="white" />
           </TouchableOpacity>
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.weatherContainer}>
-            <UpperInfo />
+        {responseStatus ? (
+          <Mock />
+        ) : (
+          <ScrollView
+            style={{ backgroundColor: '#f4f4f4' }}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.weatherContainer}>
+              <UpperInfo />
 
-            <View style={styles.weatherInfo}>
-              <View style={{ gap: 10 }}>
-                <View style={styles.tempInfoContainer}>
-                  <Text
-                    style={{
-                      fontSize: 50,
-                      color:
+              <View style={styles.weatherInfo}>
+                <View style={{ gap: 10 }}>
+                  <View style={styles.tempInfoContainer}>
+                    <Text
+                      style={{
+                        fontSize: 50,
+                        color:
+                          typeof temp === 'number' && temp > 0
+                            ? '#B65050'
+                            : '#5074B6',
+                      }}
+                    >
+                      {Math.round(temp ?? 0)}
+                    </Text>
+                    <ThermometerIcon
+                      size={36}
+                      weight="fill"
+                      color={
                         typeof temp === 'number' && temp > 0
                           ? '#B65050'
-                          : '#5074B6',
-                    }}
-                  >
-                    {Math.round(temp ?? 0)}
-                  </Text>
-                  <ThermometerIcon
-                    size={36}
-                    weight="fill"
-                    color={
-                      typeof temp === 'number' && temp > 0
-                        ? '#B65050'
-                        : '#5074B6'
-                    }
-                  />
-                </View>
-                <View style={styles.feelsLikeTextContainer}>
-                  <PersonSimpleSwimIcon
-                    weight="regular"
-                    size={20}
-                    color={
-                      typeof temp === 'number' && temp > 0
-                        ? '#cc9797'
-                        : '#97a8cc'
-                    }
-                  />
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color:
+                          : '#5074B6'
+                      }
+                    />
+                  </View>
+                  <View style={styles.feelsLikeTextContainer}>
+                    <PersonSimpleSwimIcon
+                      weight="regular"
+                      size={20}
+                      color={
                         typeof temp === 'number' && temp > 0
                           ? '#cc9797'
-                          : '#97a8cc',
-                    }}
-                  >
-                    {`Feels like ${Math.round(feelsLike ?? 0)}°`}
-                  </Text>
+                          : '#97a8cc'
+                      }
+                    />
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color:
+                          typeof temp === 'number' && temp > 0
+                            ? '#cc9797'
+                            : '#97a8cc',
+                      }}
+                    >
+                      {`Feels like ${Math.round(feelsLike ?? 0)}°`}
+                    </Text>
+                  </View>
                 </View>
+                <Image style={styles.weatherImage} source={WeatherImage} />
               </View>
-              <Image style={styles.weatherImage} source={WeatherImage} />
-            </View>
 
-            <View style={{ gap: 12, width: '100%' }}>
-              <InfoCard
-                WeatherIcon={DropHalfIcon}
-                text="Humidity"
-                infoText={`${humidity}%`}
-                color="#6C78B3"
-              />
-              <InfoCard
-                WeatherIcon={WindIcon}
-                text="Wind Speed"
-                infoText={`${wind} m/h`}
-                color="#6ca8b3"
+              <View style={{ gap: 12, width: '100%' }}>
+                <InfoCard
+                  WeatherIcon={DropHalfIcon}
+                  text="Humidity"
+                  infoText={`${humidity}%`}
+                  color="#6C78B3"
+                />
+                <InfoCard
+                  WeatherIcon={WindIcon}
+                  text="Wind Speed"
+                  infoText={`${wind} m/h`}
+                  color="#6ca8b3"
+                />
+              </View>
+
+              <WeatherMap
+                cityName={city ?? 'Wait'}
+                temp={Math.round(temp ?? 0)}
               />
             </View>
-
-            <WeatherMap
-              cityName={city ?? 'Wait'}
-              temp={Math.round(temp ?? 0)}
-            />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        )}
       </SafeAreaView>
     </View>
   );
@@ -164,14 +181,17 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#fafafa',
   },
   header: {
     width: '100%',
-    paddingBottom: 24,
+    padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#fafafa',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
   headerTextContainer: {
     flexDirection: 'row',
@@ -185,7 +205,7 @@ const styles = StyleSheet.create({
   },
   returnToLocationBtn: {
     flexDirection: 'row',
-    backgroundColor: '#5d8cd8',
+    backgroundColor: '#0088ff',
     height: 35,
     width: 35,
     borderRadius: '50%',
@@ -197,7 +217,8 @@ const styles = StyleSheet.create({
     height: '100%',
     gap: 12,
     alignItems: 'center',
-    paddingBottom: 60,
+    padding: 20,
+    paddingBottom: 140,
   },
   weatherInfo: {
     width: '100%',

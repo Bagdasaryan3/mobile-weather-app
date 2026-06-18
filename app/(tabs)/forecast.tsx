@@ -21,7 +21,7 @@ const Forecast = () => {
 
         <View style={styles.forecastContainer}>
           <FlatList
-            style={{ width: '100%' }}
+            style={{ width: '100%', backgroundColor: '#f4f4f4', padding: 20 }}
             showsVerticalScrollIndicator={false}
             data={forecastList}
             renderItem={({ item }) => (
@@ -47,14 +47,17 @@ const Forecast = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#fafafa',
   },
   header: {
     width: '100%',
-    paddingBottom: 24,
+    padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#fafafa',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
   headerTextContainer: {
     flexDirection: 'row',
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
     height: '100%',
     gap: 12,
     alignItems: 'center',
-    paddingBottom: 80,
+    paddingBottom: 140,
   },
 });
 
