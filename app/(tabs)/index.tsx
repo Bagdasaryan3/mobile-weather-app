@@ -15,12 +15,14 @@ import {
   CloudWarningIcon,
   WindIcon,
   MapPinAreaIcon,
+  BookmarkSimpleIcon,
 } from 'phosphor-react-native';
 import WeatherMap from '@/src/components/weatherMap';
 import { weatherIconMap } from '@/src/data/icons';
 import { weatherImageMap } from '@/src/data/imgs';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
+import { useBookStore } from '@/src/store/useBookStore';
 import UpperInfo from '@/src/components/upperInfo';
 import InfoCard from '@/src/components/infoCard';
 import Mock from '@/src/components/mock';
@@ -28,7 +30,6 @@ import { StatusBar } from 'react-native';
 
 export default function Index() {
   StatusBar.setBarStyle('dark-content');
-  StatusBar.setBackgroundColor('#000');
 
   const getResponse = useResponseStore((state) => state.getResponse);
 
@@ -52,6 +53,9 @@ export default function Index() {
   const iconId = useResponseStore(
     (state) => state.response?.list[0].weather[0].icon,
   );
+
+  const toggleSavedCity = useBookStore((state) => state.toggleSavedCity);
+  const cities = useBookStore((state) => state.cities);
 
   const IconComponent =
     weatherIconMap[iconId as keyof typeof weatherIconMap] || CloudWarningIcon;
@@ -81,13 +85,16 @@ export default function Index() {
           </View>
 
           <TouchableOpacity
-            style={styles.returnToLocationBtn}
-            onPress={() => {
-              setPlaceName(locationName);
-              getResponse();
-            }}
+            style={styles.saveBtn}
+            onPress={() => toggleSavedCity(city ?? '')}
           >
-            <MapPinAreaIcon size={20} color="white" />
+            <BookmarkSimpleIcon
+              size={28}
+              weight="fill"
+              color={
+                cities.some((item) => item === city) ? '#ebce4f' : '#c9c9c9'
+              }
+            />
           </TouchableOpacity>
         </View>
 
@@ -170,6 +177,18 @@ export default function Index() {
                 cityName={city ?? 'Wait'}
                 temp={Math.round(temp ?? 0)}
               />
+              <TouchableOpacity
+                style={styles.returnToLocationBtn}
+                onPress={() => {
+                  setPlaceName(locationName);
+                  getResponse();
+                }}
+              >
+                <MapPinAreaIcon size={20} color="white" />
+                <Text style={{ color: 'white', fontSize: 16, fontWeight: 500 }}>
+                  Back to your Location
+                </Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         )}
@@ -206,11 +225,18 @@ const styles = StyleSheet.create({
   returnToLocationBtn: {
     flexDirection: 'row',
     backgroundColor: '#0088ff',
-    height: 35,
-    width: 35,
-    borderRadius: '50%',
+    height: 46,
+    width: '100%',
+    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 12,
+    borderWidth: 1,
+    borderColor: '#a9d7ff',
+  },
+  saveBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   weatherContainer: {
     width: '100%',

@@ -6,8 +6,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import { usePlaceNameStore } from '../store/usePlaceNameStore';
+import { BookmarkSimpleIcon } from 'phosphor-react-native';
 import { useResponseStore } from '../store/useResponseStore';
 import { MagnifyingGlassIcon } from 'phosphor-react-native';
+import { useBookStore } from '../store/useBookStore';
 
 export default function UpperInfo() {
   const placeNameText = usePlaceNameStore((state) => state.placeNameText);
@@ -42,10 +44,19 @@ export default function UpperInfo() {
           <MagnifyingGlassIcon size={22} color="#0088ff" />
         </TouchableOpacity>
       </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <View>
+          <Text style={styles.upperInfoMainText}>{main}</Text>
 
-      <Text style={styles.upperInfoMainText}>{main}</Text>
-
-      <Text style={styles.upperInfoDescText}>{condition}</Text>
+          <Text style={styles.upperInfoDescText}>{condition}</Text>
+        </View>
+      </View>
     </View>
   );
 }

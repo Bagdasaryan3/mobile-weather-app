@@ -3,10 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { CalendarDotsIcon } from 'phosphor-react-native';
 import ForecastCard from '@/src/components/forecastCard';
-import { useState } from 'react';
 
 const Forecast = () => {
-  const cityName = useResponseStore((state) => state.response?.city.name);
   const forecastList = useResponseStore((state) => state.response?.list);
 
   return (
@@ -15,7 +13,7 @@ const Forecast = () => {
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
             <CalendarDotsIcon size={24} weight="fill" color="#313131" />
-            <Text style={styles.dateText}>{`Forecast for ${cityName}`}</Text>
+            <Text style={styles.dateText}>Forecast</Text>
           </View>
         </View>
 

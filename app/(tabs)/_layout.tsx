@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import {
   CloudSunIcon,
-  BooksIcon,
+  BookIcon,
   CalendarDotsIcon,
   GearFineIcon,
 } from 'phosphor-react-native';
@@ -37,7 +37,7 @@ export default function TabsLayout() {
         name="book"
         options={{
           title: 'Book',
-          tabBarIcon: ({ color }) => <BooksIcon color={color} weight="fill" />,
+          tabBarIcon: ({ color }) => <BookIcon color={color} weight="fill" />,
         }}
       />
       <Tabs.Screen
