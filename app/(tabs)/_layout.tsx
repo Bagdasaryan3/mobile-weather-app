@@ -17,7 +17,7 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: isDarkTheme ? '#585D6B' : '#a5a5a5',
         tabBarStyle: {
           borderTopWidth: 0,
-          backgroundColor: isDarkTheme ? '#12141A' : 'white',
+          backgroundColor: isDarkTheme ? '#1b1e27' : 'white',
         },
       }}
     >

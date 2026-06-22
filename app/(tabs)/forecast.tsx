@@ -3,23 +3,46 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { CalendarDotsIcon } from 'phosphor-react-native';
 import ForecastCard from '@/src/components/forecastCard';
+import { useDegreeStore } from '@/src/store/useDegreeStore';
 
 const Forecast = () => {
   const forecastList = useResponseStore((state) => state.response?.list);
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: isDarkTheme ? '#1b1e27' : '#fafafa',
+      }}
+    >
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <CalendarDotsIcon size={24} weight="fill" color="#313131" />
-            <Text style={styles.dateText}>Forecast</Text>
+            <CalendarDotsIcon
+              size={24}
+              weight="fill"
+              color={isDarkTheme ? '#E8EEFF' : '#313131'}
+            />
+            <Text
+              style={{
+                ...styles.dateText,
+                color: isDarkTheme ? '#E8EEFF' : '#313131',
+              }}
+            >
+              Forecast
+            </Text>
           </View>
         </View>
 
-        <View style={styles.forecastContainer}>
+        <View
+          style={{
+            ...styles.forecastContainer,
+            backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4',
+          }}
+        >
           <FlatList
-            style={{ width: '100%', backgroundColor: '#f4f4f4', padding: 20 }}
+            style={{ width: '100%', padding: 20 }}
             showsVerticalScrollIndicator={false}
             data={forecastList}
             renderItem={({ item }) => (
@@ -45,7 +68,6 @@ const Forecast = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
   },
   header: {
     width: '100%',
@@ -53,9 +75,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fafafa',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
   },
   headerTextContainer: {
     flexDirection: 'row',
@@ -72,7 +91,7 @@ const styles = StyleSheet.create({
     height: '100%',
     gap: 12,
     alignItems: 'center',
-    paddingBottom: 140,
+    paddingBottom: 130,
   },
 });
 

@@ -30,8 +30,6 @@ import Mock from '@/src/components/mock';
 import { StatusBar } from 'react-native';
 
 export default function Index() {
-  StatusBar.setBarStyle('dark-content');
-
   const getResponse = useResponseStore((state) => state.getResponse);
 
   const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
@@ -75,7 +73,12 @@ export default function Index() {
   }, [locationName]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: isDarkTheme ? '#1b1e27' : '#fafafa',
+      }}
+    >
       <SafeAreaView edges={['top']}>
         <StatusBar
           barStyle={isDarkTheme ? 'light-content' : 'dark-content'} // иконки чёрные (и iOS тоже)
@@ -83,8 +86,19 @@ export default function Index() {
 
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <IconComponent size={24} weight="fill" color="#313131" />
-            <Text style={styles.dateText}>{city}</Text>
+            <IconComponent
+              size={24}
+              weight="fill"
+              color={isDarkTheme ? '#E8EEFF' : '#313131'}
+            />
+            <Text
+              style={{
+                ...styles.dateText,
+                color: isDarkTheme ? '#E8EEFF' : '#313131',
+              }}
+            >
+              {city}
+            </Text>
           </View>
 
           <TouchableOpacity
@@ -95,7 +109,11 @@ export default function Index() {
               size={28}
               weight="fill"
               color={
-                cities.some((item) => item === city) ? '#ebce4f' : '#c9c9c9'
+                cities.some((item) => item === city)
+                  ? '#ebce4f'
+                  : isDarkTheme
+                    ? '#33394a'
+                    : '#c9c9c9'
               }
             />
           </TouchableOpacity>
@@ -105,7 +123,7 @@ export default function Index() {
           <Mock />
         ) : (
           <ScrollView
-            style={{ backgroundColor: '#f4f4f4' }}
+            style={{ backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4' }}
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.weatherContainer}>
@@ -203,7 +221,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
   },
   header: {
     width: '100%',
@@ -211,9 +228,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fafafa',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
   },
   headerTextContainer: {
     flexDirection: 'row',
@@ -223,7 +237,6 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 24,
     fontWeight: 700,
-    color: '#313131',
   },
   returnToLocationBtn: {
     flexDirection: 'row',
@@ -234,8 +247,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 12,
-    borderWidth: 1,
-    borderColor: '#a9d7ff',
   },
   saveBtn: {
     justifyContent: 'center',

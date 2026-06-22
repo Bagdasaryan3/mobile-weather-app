@@ -10,9 +10,11 @@ import {
 } from 'phosphor-react-native';
 import { PersonSimpleSwimIcon } from 'phosphor-react-native';
 import ForecastInfoCard from './forecastInfoCard';
+import { useDegreeStore } from '../store/useDegreeStore';
 
 const ForecastCard = (props: WeatherForecastItem) => {
   const { main, weather, wind, dt_txt } = props;
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
 
   const WeatherImage =
     weatherImageMap[weather[0].icon as keyof typeof weatherImageMap] ||
@@ -23,19 +25,58 @@ const ForecastCard = (props: WeatherForecastItem) => {
     CloudWarningIcon;
 
   return (
-    <View style={styles.card}>
+    <View
+      style={{
+        ...styles.card,
+        backgroundColor: isDarkTheme ? '#13151b' : '#f9f9f9',
+      }}
+    >
       <View style={styles.forecastDate}>
-        <ClockIcon size={18} color="#172c3d" weight="bold" />
-        <Text style={styles.forecastDateText}>{dt_txt}</Text>
+        <ClockIcon
+          size={18}
+          color={isDarkTheme ? '#E8EEFF' : '#313131'}
+          weight="bold"
+        />
+        <Text
+          style={{
+            ...styles.forecastDateText,
+            color: isDarkTheme ? '#E8EEFF' : '#313131',
+          }}
+        >
+          {dt_txt}
+        </Text>
       </View>
 
-      <View style={styles.weatherInfo}>
+      <View
+        style={{
+          ...styles.weatherInfo,
+          backgroundColor: isDarkTheme ? '#1b1d26' : '#fff',
+        }}
+      >
         <View style={styles.mainDescription}>
-          <IconComponent size={20} weight="fill" color="#313131" />
-          <Text style={styles.mainDescriptionText}>{weather[0].main}</Text>
+          <IconComponent
+            size={20}
+            weight="fill"
+            color={isDarkTheme ? '#E8EEFF' : '#313131'}
+          />
+          <Text
+            style={{
+              ...styles.mainDescriptionText,
+              color: isDarkTheme ? '#E8EEFF' : '#313131',
+            }}
+          >
+            {weather[0].main}
+          </Text>
         </View>
 
-        <Text style={styles.description}>{weather[0].description}</Text>
+        <Text
+          style={{
+            ...styles.description,
+            color: isDarkTheme ? '#565d6f' : '#848484',
+          }}
+        >
+          {weather[0].description}
+        </Text>
       </View>
 
       <View style={styles.tempInfoContainer}>
@@ -87,7 +128,6 @@ const ForecastCard = (props: WeatherForecastItem) => {
 const styles = StyleSheet.create({
   card: {
     padding: 12,
-    backgroundColor: '#f9f9f9',
     borderRadius: 20,
     width: '100%',
     marginBottom: 20,

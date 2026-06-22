@@ -6,12 +6,13 @@ import {
   StyleSheet,
 } from 'react-native';
 import { usePlaceNameStore } from '../store/usePlaceNameStore';
-import { BookmarkSimpleIcon } from 'phosphor-react-native';
 import { useResponseStore } from '../store/useResponseStore';
 import { MagnifyingGlassIcon } from 'phosphor-react-native';
-import { useBookStore } from '../store/useBookStore';
+import { useDegreeStore } from '../store/useDegreeStore';
 
 export default function UpperInfo() {
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
+
   const placeNameText = usePlaceNameStore((state) => state.placeNameText);
   const setPlaceNameText = usePlaceNameStore((state) => state.setPlaceNameText);
   const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
@@ -32,11 +33,21 @@ export default function UpperInfo() {
   };
 
   return (
-    <View style={styles.upperInfo}>
+    <View
+      style={{
+        ...styles.upperInfo,
+        backgroundColor: isDarkTheme ? '#13151b' : '#f9f9f9',
+      }}
+    >
       <View style={styles.placeSearchField}>
         <TextInput
-          style={styles.placeSearchTextInput}
+          style={{
+            ...styles.placeSearchTextInput,
+            backgroundColor: isDarkTheme ? '#101116' : '#f2f2f2',
+            color: isDarkTheme ? '#E8EEFF' : '#313131',
+          }}
           placeholder="Enter place name"
+          placeholderTextColor={isDarkTheme ? '#3a4753' : '#9f9f9f'}
           onChangeText={(text) => setPlaceNameText(text)}
           value={placeNameText}
         />
@@ -52,9 +63,23 @@ export default function UpperInfo() {
         }}
       >
         <View>
-          <Text style={styles.upperInfoMainText}>{main}</Text>
+          <Text
+            style={{
+              ...styles.upperInfoMainText,
+              color: isDarkTheme ? '#E8EEFF' : '#313131',
+            }}
+          >
+            {main}
+          </Text>
 
-          <Text style={styles.upperInfoDescText}>{condition}</Text>
+          <Text
+            style={{
+              ...styles.upperInfoDescText,
+              color: isDarkTheme ? '#4b5662' : '#848484',
+            }}
+          >
+            {condition}
+          </Text>
         </View>
       </View>
     </View>
@@ -67,8 +92,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     gap: 4,
-
-    backgroundColor: '#f9f9f9',
   },
 
   placeSearchField: {
@@ -80,7 +103,6 @@ const styles = StyleSheet.create({
   },
   placeSearchTextInput: {
     width: '90%',
-    backgroundColor: '#f2f2f2',
     borderRadius: 20,
     padding: 8,
   },

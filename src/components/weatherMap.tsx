@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useResponseStore } from '../store/useResponseStore';
-
+import { useDegreeStore } from '../store/useDegreeStore';
 interface WeatherMapProps {
   cityName: string;
   temp: number;
@@ -11,9 +11,15 @@ interface WeatherMapProps {
 export default function WeatherMap({ cityName, temp }: WeatherMapProps) {
   const lat = useResponseStore((state) => state.response?.city.coord.lat);
   const lon = useResponseStore((state) => state.response?.city.coord.lon);
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
 
   return (
-    <View style={styles.mapContainer}>
+    <View
+      style={{
+        ...styles.mapContainer,
+        borderColor: isDarkTheme ? '#5f778c' : 'white',
+      }}
+    >
       <MapView
         style={styles.map}
         region={{
@@ -39,8 +45,6 @@ const styles = StyleSheet.create({
     height: 450,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'white',
-    backgroundColor: '#FAFAFA',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
