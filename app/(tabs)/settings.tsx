@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Switch } from 'react-native';
+import { View, Text, StyleSheet, Switch, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GearFineIcon } from 'phosphor-react-native';
 import { useDegreeStore } from '@/src/store/useDegreeStore';
@@ -7,6 +7,10 @@ import { useResponseStore } from '@/src/store/useResponseStore';
 const Settings = () => {
   const showIn = useDegreeStore((state) => state.showIn);
   const toggleShowIn = useDegreeStore((state) => state.toggleShowIn);
+
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
+  const toggleTheme = useDegreeStore((state) => state.toggleTheme);
+
   const getResponse = useResponseStore((state) => state.getResponse);
 
   const toggleSetting = () => {
@@ -15,21 +19,72 @@ const Settings = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4',
+      }}
+    >
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <GearFineIcon size={24} weight="regular" color="#313131" />
-            <Text style={styles.dateText}>Settings</Text>
+            <GearFineIcon
+              size={24}
+              weight="regular"
+              color={isDarkTheme ? '#E8EEFF' : '#313131'}
+            />
+            <Text
+              style={{
+                ...styles.dateText,
+                color: isDarkTheme ? '#E8EEFF' : '#313131',
+              }}
+            >
+              Settings
+            </Text>
           </View>
         </View>
 
-        <View>
-          <View style={styles.settingItem}>
-            <Text style={{ fontSize: 18 }}>Show in Fahrenheits</Text>
-            <Switch value={showIn} onValueChange={toggleSetting} />
+        <ScrollView style={{ width: '100%', height: '100%' }}>
+          <View>
+            <View
+              style={{
+                ...styles.settingItem,
+                backgroundColor: isDarkTheme ? '#171921' : '#fafafa',
+                borderColor: isDarkTheme ? '#1B1D25' : 'white',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: isDarkTheme ? '#E8EEFF' : '#313131',
+                }}
+              >
+                Show in Fahrenheits
+              </Text>
+              <Switch value={showIn} onValueChange={toggleSetting} />
+            </View>
           </View>
-        </View>
+
+          <View>
+            <View
+              style={{
+                ...styles.settingItem,
+                backgroundColor: isDarkTheme ? '#171921' : '#fafafa',
+                borderColor: isDarkTheme ? '#1B1D25' : 'white',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: isDarkTheme ? '#E8EEFF' : '#313131',
+                }}
+              >
+                Dark theme
+              </Text>
+              <Switch value={isDarkTheme} onValueChange={toggleTheme} />
+            </View>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
@@ -63,11 +118,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#fafafa',
     borderWidth: 1,
-    borderColor: 'white',
     padding: 12,
     borderRadius: 18,
+    marginBottom: 14,
   },
 });
 

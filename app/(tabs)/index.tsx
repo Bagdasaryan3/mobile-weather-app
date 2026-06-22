@@ -22,6 +22,7 @@ import { weatherIconMap } from '@/src/data/icons';
 import { weatherImageMap } from '@/src/data/imgs';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
+import { useDegreeStore } from '@/src/store/useDegreeStore';
 import { useBookStore } from '@/src/store/useBookStore';
 import UpperInfo from '@/src/components/upperInfo';
 import InfoCard from '@/src/components/infoCard';
@@ -32,6 +33,8 @@ export default function Index() {
   StatusBar.setBarStyle('dark-content');
 
   const getResponse = useResponseStore((state) => state.getResponse);
+
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
 
   const responseStatus = useResponseStore((state) => state.responseStatus);
 
@@ -75,7 +78,7 @@ export default function Index() {
     <View style={styles.container}>
       <SafeAreaView edges={['top']}>
         <StatusBar
-          barStyle="dark-content" // иконки чёрные (и iOS тоже)
+          barStyle={isDarkTheme ? 'light-content' : 'dark-content'} // иконки чёрные (и iOS тоже)
         />
 
         <View style={styles.header}>

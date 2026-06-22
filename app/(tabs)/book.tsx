@@ -57,6 +57,7 @@ const Book = () => {
                   <SavedCityCard
                     cityName={item.city.name}
                     temp={item.list[0].main.temp}
+                    icon={item.list[0].weather[0].icon}
                   />
                 )}
               />

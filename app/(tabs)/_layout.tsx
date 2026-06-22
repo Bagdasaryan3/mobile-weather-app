@@ -5,14 +5,20 @@ import {
   CalendarDotsIcon,
   GearFineIcon,
 } from 'phosphor-react-native';
+import { useDegreeStore } from '@/src/store/useDegreeStore';
 
 export default function TabsLayout() {
+  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#0088ff',
-        tabBarInactiveTintColor: '#a5a5a5',
+        tabBarInactiveTintColor: isDarkTheme ? '#585D6B' : '#a5a5a5',
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: isDarkTheme ? '#12141A' : 'white',
+        },
       }}
     >
       <Tabs.Screen
