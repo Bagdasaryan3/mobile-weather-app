@@ -12,7 +12,7 @@ interface IDarkTheme {
 }
 
 interface ILightTheme {
-  screen: '#fafafa';
+  screen: '#ffffff';
   background: '#f2f2f2';
   main_text: '#313131';
   second_text: '#848484';
@@ -20,7 +20,7 @@ interface ILightTheme {
   forecast_info_card_color: '#f4f4f4';
   text_input_color: '#f2f2f2';
   text_input_placeholder_color: '#9f9f9f';
-  card_border_color: '#fff';
+  card_border_color: '#fcfcfc';
   weather_info_card_color: '#fff';
 }
 

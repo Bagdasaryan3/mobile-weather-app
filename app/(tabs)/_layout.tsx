@@ -5,10 +5,10 @@ import {
   CalendarDotsIcon,
   GearFineIcon,
 } from 'phosphor-react-native';
-import { useDegreeStore } from '@/src/store/useDegreeStore';
+import { useSettingsStore } from '@/src/store/useSettingsStore';
 
 export default function TabsLayout() {
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
+  const isDarkTheme = useSettingsStore((state) => state.isDarkTheme);
   return (
     <Tabs
       screenOptions={{

@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-interface IDegreeStore {
+interface ISettingsStore {
   showIn: boolean;
   toggleShowIn: () => void;
   isDarkTheme: boolean;
   toggleTheme: () => void;
 }
 
-const useDegreeStore = create<IDegreeStore>((set) => ({
+const useSettingsStore = create<ISettingsStore>((set) => ({
   showIn: false,
   toggleShowIn: () => {
     set((state) => ({ showIn: !state.showIn }));
@@ -19,4 +19,4 @@ const useDegreeStore = create<IDegreeStore>((set) => ({
   },
 }));
 
-export { useDegreeStore };
+export { useSettingsStore };

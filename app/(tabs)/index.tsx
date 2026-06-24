@@ -22,25 +22,22 @@ import { weatherIconMap } from '@/src/data/icons';
 import { weatherImageMap } from '@/src/data/imgs';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
-import { useDegreeStore } from '@/src/store/useDegreeStore';
+import { useSettingsStore } from '@/src/store/useSettingsStore';
 import { useBookStore } from '@/src/store/useBookStore';
 import UpperInfo from '@/src/components/upperInfo';
 import InfoCard from '@/src/components/infoCard';
 import Mock from '@/src/components/mock';
 import { StatusBar } from 'react-native';
 import { useColorTheme } from '@/src/hooks/useColorTheme';
+import { pageStyles } from '@/styles/page';
 
 export default function Index() {
-  const getResponse = useResponseStore((state) => state.getResponse);
+  const isDarkTheme = useSettingsStore((state) => state.isDarkTheme);
+  const theme = useColorTheme();
 
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
-
-  const responseStatus = useResponseStore((state) => state.responseStatus);
-
-  const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
-  const locationName = usePlaceNameStore((state) => state.locationName);
-
-  const getLocation = usePlaceNameStore((state) => state.getLocation);
+  const response = useResponseStore();
+  const place = usePlaceNameStore();
+  const books = useBookStore();
 
   const city = useResponseStore((state) => state.response?.city.name);
   const temp = useResponseStore((state) => state.response?.list[0].main.temp);
@@ -50,14 +47,10 @@ export default function Index() {
   const humidity = useResponseStore(
     (state) => state.response?.list[0].main.humidity,
   );
-
   const wind = useResponseStore((state) => state.response?.list[0].wind.speed);
   const iconId = useResponseStore(
     (state) => state.response?.list[0].weather[0].icon,
   );
-
-  const toggleSavedCity = useBookStore((state) => state.toggleSavedCity);
-  const cities = useBookStore((state) => state.cities);
 
   const IconComponent =
     weatherIconMap[iconId as keyof typeof weatherIconMap] || CloudWarningIcon;
@@ -66,19 +59,17 @@ export default function Index() {
     require('../../images/err.png');
 
   useEffect(() => {
-    getLocation();
-  });
+    place.getLocation();
+  }, []);
 
   useEffect(() => {
-    getResponse();
-  }, [locationName]);
-
-  const theme = useColorTheme();
+    response.getResponse();
+  }, [place.locationName]);
 
   return (
     <View
       style={{
-        ...styles.container,
+        ...pageStyles.container,
         backgroundColor: theme.screen,
       }}
     >
@@ -87,12 +78,12 @@ export default function Index() {
           barStyle={isDarkTheme ? 'light-content' : 'dark-content'} // иконки чёрные (и iOS тоже)
         />
 
-        <View style={styles.header}>
-          <View style={styles.headerTextContainer}>
+        <View style={pageStyles.header}>
+          <View style={pageStyles.headerTextContainer}>
             <IconComponent size={24} weight="fill" color={theme.main_text} />
             <Text
               style={{
-                ...styles.dateText,
+                ...pageStyles.dateText,
                 color: theme.main_text,
               }}
             >
@@ -102,13 +93,13 @@ export default function Index() {
 
           <TouchableOpacity
             style={styles.saveBtn}
-            onPress={() => toggleSavedCity(city ?? '')}
+            onPress={() => books.toggleSavedCity(city ?? '')}
           >
             <BookmarkSimpleIcon
               size={28}
               weight="fill"
               color={
-                cities.some((item) => item === city)
+                books.cities.some((item) => item === city)
                   ? '#ebce4f'
                   : isDarkTheme
                     ? '#33394a'
@@ -118,7 +109,7 @@ export default function Index() {
           </TouchableOpacity>
         </View>
 
-        {responseStatus ? (
+        {response.responseStatus ? (
           <Mock />
         ) : (
           <ScrollView
@@ -200,8 +191,8 @@ export default function Index() {
               <TouchableOpacity
                 style={styles.returnToLocationBtn}
                 onPress={() => {
-                  setPlaceName(locationName);
-                  getResponse();
+                  place.setPlaceName(place.locationName);
+                  response.getResponse();
                 }}
               >
                 <MapPinAreaIcon size={20} color="white" />
@@ -218,25 +209,6 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    width: '100%',
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  dateText: {
-    fontSize: 24,
-    fontWeight: 700,
-  },
   returnToLocationBtn: {
     flexDirection: 'row',
     backgroundColor: '#0088ff',

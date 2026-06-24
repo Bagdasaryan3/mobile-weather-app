@@ -1,6 +1,4 @@
 import { create } from 'zustand';
-import { useDegreeStore } from './useDegreeStore';
-import { getWeather } from '../api/getWeather';
 import type { OpenWeatherApiResponse } from '../types/datacontext.types';
 
 interface IBookStore {

@@ -120,7 +120,7 @@ const ForecastCard = (props: WeatherForecastItem) => {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 12,
+    padding: 14,
     borderRadius: 20,
     width: '100%',
     marginBottom: 20,

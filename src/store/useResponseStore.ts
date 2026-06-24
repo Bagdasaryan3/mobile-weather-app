@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import type { OpenWeatherApiResponse } from '../types/datacontext.types';
 import { getWeather } from '../api/getWeather';
 import { usePlaceNameStore } from './usePlaceNameStore';
-import { useDegreeStore } from './useDegreeStore';
+import { useSettingsStore } from './useSettingsStore';
 interface IResponseStore {
   responseStatus: boolean;
   response: OpenWeatherApiResponse | null;
@@ -15,7 +15,7 @@ const useResponseStore = create<IResponseStore>((set) => ({
   getResponse: async () => {
     const { placeName, lastPlaceName, setPlaceName } =
       usePlaceNameStore.getState();
-    const { showIn } = useDegreeStore.getState();
+    const { showIn } = useSettingsStore.getState();
 
     try {
       const res = await getWeather(

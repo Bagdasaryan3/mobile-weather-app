@@ -4,6 +4,7 @@ import { useResponseStore } from '@/src/store/useResponseStore';
 import { CalendarDotsIcon } from 'phosphor-react-native';
 import ForecastCard from '@/src/components/forecastCard';
 import { useColorTheme } from '@/src/hooks/useColorTheme';
+import { pageStyles } from '@/styles/page';
 
 const Forecast = () => {
   const forecastList = useResponseStore((state) => state.response?.list);
@@ -12,17 +13,17 @@ const Forecast = () => {
   return (
     <View
       style={{
-        ...styles.container,
+        ...pageStyles.container,
         backgroundColor: theme.screen,
       }}
     >
       <SafeAreaView edges={['top']}>
-        <View style={styles.header}>
-          <View style={styles.headerTextContainer}>
+        <View style={pageStyles.header}>
+          <View style={pageStyles.headerTextContainer}>
             <CalendarDotsIcon size={24} weight="fill" color={theme.main_text} />
             <Text
               style={{
-                ...styles.dateText,
+                ...pageStyles.dateText,
                 color: theme.main_text,
               }}
             >
@@ -33,7 +34,7 @@ const Forecast = () => {
 
         <View
           style={{
-            ...styles.forecastContainer,
+            ...pageStyles.contentContainer,
             backgroundColor: theme.background,
           }}
         >
@@ -60,35 +61,5 @@ const Forecast = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    width: '100%',
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  dateText: {
-    fontSize: 24,
-    fontWeight: 700,
-    color: '#313131',
-  },
-  forecastContainer: {
-    width: '100%',
-    height: '100%',
-    gap: 12,
-    alignItems: 'center',
-    paddingBottom: 130,
-  },
-});
 
 export default Forecast;

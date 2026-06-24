@@ -1,8 +1,8 @@
 import { themes } from '../themes/theme';
-import { useDegreeStore } from '../store/useDegreeStore';
+import { useSettingsStore } from '../store/useSettingsStore';
 
 const useColorTheme = () => {
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
+  const isDarkTheme = useSettingsStore((state) => state.isDarkTheme);
   return isDarkTheme ? themes.dark : themes.light;
 };
 

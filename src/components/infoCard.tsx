@@ -37,8 +37,6 @@ const styles = StyleSheet.create({
   infoCard: {
     gap: 6,
     width: '100%',
-    /*borderWidth: 1,
-    borderColor: 'white',*/
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
