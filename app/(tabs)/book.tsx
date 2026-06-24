@@ -6,12 +6,12 @@ import SavedCityCard from '@/src/components/savedCityCard';
 import { useEffect } from 'react';
 import { useDegreeStore } from '@/src/store/useDegreeStore';
 import { getWeather } from '@/src/api/getWeather';
+import { useColorTheme } from '@/src/hooks/useColorTheme';
 
 const Book = () => {
   const cities = useBookStore((state) => state.cities);
   const setCitiesWeather = useBookStore((state) => state.setCitiesWeather);
   const citiesWeather = useBookStore((state) => state.citiesWeather);
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
   const showIn = useDegreeStore((state) => state.showIn);
   useEffect(() => {
     const setAll = async () => {
@@ -25,25 +25,24 @@ const Book = () => {
     setAll();
   }, [cities, showIn]);
 
+  /**Тема!! */
+  const theme = useColorTheme();
+
   return (
     <View
       style={{
         ...styles.container,
-        backgroundColor: isDarkTheme ? '#1b1e27' : '#fafafa',
+        backgroundColor: theme.screen,
       }}
     >
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <BookIcon
-              size={24}
-              weight="fill"
-              color={isDarkTheme ? '#E8EEFF' : '#313131'}
-            />
+            <BookIcon size={24} weight="fill" color={theme.main_text} />
             <Text
               style={{
                 ...styles.dateText,
-                color: isDarkTheme ? '#E8EEFF' : '#313131',
+                color: theme.main_text,
               }}
             >
               Weather Book
@@ -55,7 +54,7 @@ const Book = () => {
           style={{
             width: '100%',
             height: '100%',
-            backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4',
+            backgroundColor: theme.background,
             paddingBottom: 140,
           }}
         >
@@ -92,7 +91,7 @@ const Book = () => {
               <Text
                 style={{
                   fontSize: 20,
-                  color: isDarkTheme ? '#E8EEFF' : '#252525',
+                  color: theme.main_text,
                   fontWeight: 600,
                 }}
               >

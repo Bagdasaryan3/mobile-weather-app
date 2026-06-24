@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'phosphor-react-native';
-import { useDegreeStore } from '../store/useDegreeStore';
+import { useColorTheme } from '../hooks/useColorTheme';
 
 interface IProps {
   WeatherIcon: Icon;
@@ -15,12 +15,12 @@ export default function ForecastInfoCard({
   infoText,
   color,
 }: IProps) {
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
+  const theme = useColorTheme();
   return (
     <View
       style={{
         ...styles.infoCard,
-        backgroundColor: isDarkTheme ? '#0f1115' : '#f4f4f4',
+        backgroundColor: theme.forecast_info_card_color,
       }}
     >
       <View style={styles.infoCardTextContainer}>

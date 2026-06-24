@@ -8,11 +8,9 @@ import {
 import { usePlaceNameStore } from '../store/usePlaceNameStore';
 import { useResponseStore } from '../store/useResponseStore';
 import { MagnifyingGlassIcon } from 'phosphor-react-native';
-import { useDegreeStore } from '../store/useDegreeStore';
+import { useColorTheme } from '../hooks/useColorTheme';
 
 export default function UpperInfo() {
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
-
   const placeNameText = usePlaceNameStore((state) => state.placeNameText);
   const setPlaceNameText = usePlaceNameStore((state) => state.setPlaceNameText);
   const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
@@ -32,22 +30,24 @@ export default function UpperInfo() {
     setPlaceNameText('');
   };
 
+  const theme = useColorTheme();
+
   return (
     <View
       style={{
         ...styles.upperInfo,
-        backgroundColor: isDarkTheme ? '#13151b' : '#f9f9f9',
+        backgroundColor: theme.card_color,
       }}
     >
       <View style={styles.placeSearchField}>
         <TextInput
           style={{
             ...styles.placeSearchTextInput,
-            backgroundColor: isDarkTheme ? '#101116' : '#f2f2f2',
-            color: isDarkTheme ? '#E8EEFF' : '#313131',
+            backgroundColor: theme.text_input_color,
+            color: theme.main_text,
           }}
           placeholder="Enter place name"
-          placeholderTextColor={isDarkTheme ? '#3a4753' : '#9f9f9f'}
+          placeholderTextColor={theme.text_input_placeholder_color}
           onChangeText={(text) => setPlaceNameText(text)}
           value={placeNameText}
         />
@@ -66,7 +66,7 @@ export default function UpperInfo() {
           <Text
             style={{
               ...styles.upperInfoMainText,
-              color: isDarkTheme ? '#E8EEFF' : '#313131',
+              color: theme.main_text,
             }}
           >
             {main}
@@ -75,7 +75,7 @@ export default function UpperInfo() {
           <Text
             style={{
               ...styles.upperInfoDescText,
-              color: isDarkTheme ? '#4b5662' : '#848484',
+              color: theme.second_text,
             }}
           >
             {condition}

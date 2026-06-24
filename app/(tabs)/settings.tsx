@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { GearFineIcon } from 'phosphor-react-native';
 import { useDegreeStore } from '@/src/store/useDegreeStore';
 import { useResponseStore } from '@/src/store/useResponseStore';
+import { useColorTheme } from '@/src/hooks/useColorTheme';
 
 const Settings = () => {
   const showIn = useDegreeStore((state) => state.showIn);
@@ -18,25 +19,23 @@ const Settings = () => {
     getResponse();
   };
 
+  const theme = useColorTheme();
+
   return (
     <View
       style={{
         ...styles.container,
-        backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4',
+        backgroundColor: theme.background,
       }}
     >
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <GearFineIcon
-              size={24}
-              weight="regular"
-              color={isDarkTheme ? '#E8EEFF' : '#313131'}
-            />
+            <GearFineIcon size={24} weight="regular" color={theme.main_text} />
             <Text
               style={{
                 ...styles.dateText,
-                color: isDarkTheme ? '#E8EEFF' : '#313131',
+                color: theme.main_text,
               }}
             >
               Settings
@@ -49,14 +48,14 @@ const Settings = () => {
             <View
               style={{
                 ...styles.settingItem,
-                backgroundColor: isDarkTheme ? '#171921' : '#fafafa',
-                borderColor: isDarkTheme ? '#1B1D25' : 'white',
+                backgroundColor: theme.card_color,
+                borderColor: theme.card_border_color,
               }}
             >
               <Text
                 style={{
                   fontSize: 18,
-                  color: isDarkTheme ? '#E8EEFF' : '#313131',
+                  color: theme.main_text,
                 }}
               >
                 Show in Fahrenheits
@@ -69,14 +68,14 @@ const Settings = () => {
             <View
               style={{
                 ...styles.settingItem,
-                backgroundColor: isDarkTheme ? '#171921' : '#fafafa',
-                borderColor: isDarkTheme ? '#1B1D25' : 'white',
+                backgroundColor: theme.card_color,
+                borderColor: theme.card_border_color,
               }}
             >
               <Text
                 style={{
                   fontSize: 18,
-                  color: isDarkTheme ? '#E8EEFF' : '#313131',
+                  color: theme.main_text,
                 }}
               >
                 Dark theme

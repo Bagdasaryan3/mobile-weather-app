@@ -10,11 +10,10 @@ import {
 } from 'phosphor-react-native';
 import { PersonSimpleSwimIcon } from 'phosphor-react-native';
 import ForecastInfoCard from './forecastInfoCard';
-import { useDegreeStore } from '../store/useDegreeStore';
+import { useColorTheme } from '../hooks/useColorTheme';
 
 const ForecastCard = (props: WeatherForecastItem) => {
   const { main, weather, wind, dt_txt } = props;
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
 
   const WeatherImage =
     weatherImageMap[weather[0].icon as keyof typeof weatherImageMap] ||
@@ -24,23 +23,21 @@ const ForecastCard = (props: WeatherForecastItem) => {
     weatherIconMap[weather[0].icon as keyof typeof weatherIconMap] ||
     CloudWarningIcon;
 
+  const theme = useColorTheme();
+
   return (
     <View
       style={{
         ...styles.card,
-        backgroundColor: isDarkTheme ? '#13151b' : '#f9f9f9',
+        backgroundColor: theme.card_color,
       }}
     >
       <View style={styles.forecastDate}>
-        <ClockIcon
-          size={18}
-          color={isDarkTheme ? '#E8EEFF' : '#313131'}
-          weight="bold"
-        />
+        <ClockIcon size={18} color={theme.main_text} weight="bold" />
         <Text
           style={{
             ...styles.forecastDateText,
-            color: isDarkTheme ? '#E8EEFF' : '#313131',
+            color: theme.main_text,
           }}
         >
           {dt_txt}
@@ -50,19 +47,15 @@ const ForecastCard = (props: WeatherForecastItem) => {
       <View
         style={{
           ...styles.weatherInfo,
-          backgroundColor: isDarkTheme ? '#1b1d26' : '#fff',
+          backgroundColor: theme.weather_info_card_color,
         }}
       >
         <View style={styles.mainDescription}>
-          <IconComponent
-            size={20}
-            weight="fill"
-            color={isDarkTheme ? '#E8EEFF' : '#313131'}
-          />
+          <IconComponent size={20} weight="fill" color={theme.main_text} />
           <Text
             style={{
               ...styles.mainDescriptionText,
-              color: isDarkTheme ? '#E8EEFF' : '#313131',
+              color: theme.main_text,
             }}
           >
             {weather[0].main}
@@ -72,7 +65,7 @@ const ForecastCard = (props: WeatherForecastItem) => {
         <Text
           style={{
             ...styles.description,
-            color: isDarkTheme ? '#565d6f' : '#848484',
+            color: theme.second_text,
           }}
         >
           {weather[0].description}
@@ -148,7 +141,6 @@ const styles = StyleSheet.create({
 
   weatherInfo: {
     gap: 6,
-    backgroundColor: '#fff',
     borderRadius: 20,
     padding: 12,
   },

@@ -3,31 +3,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { CalendarDotsIcon } from 'phosphor-react-native';
 import ForecastCard from '@/src/components/forecastCard';
-import { useDegreeStore } from '@/src/store/useDegreeStore';
+import { useColorTheme } from '@/src/hooks/useColorTheme';
 
 const Forecast = () => {
   const forecastList = useResponseStore((state) => state.response?.list);
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
+  const theme = useColorTheme();
 
   return (
     <View
       style={{
         ...styles.container,
-        backgroundColor: isDarkTheme ? '#1b1e27' : '#fafafa',
+        backgroundColor: theme.screen,
       }}
     >
       <SafeAreaView edges={['top']}>
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <CalendarDotsIcon
-              size={24}
-              weight="fill"
-              color={isDarkTheme ? '#E8EEFF' : '#313131'}
-            />
+            <CalendarDotsIcon size={24} weight="fill" color={theme.main_text} />
             <Text
               style={{
                 ...styles.dateText,
-                color: isDarkTheme ? '#E8EEFF' : '#313131',
+                color: theme.main_text,
               }}
             >
               Forecast
@@ -38,7 +34,7 @@ const Forecast = () => {
         <View
           style={{
             ...styles.forecastContainer,
-            backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4',
+            backgroundColor: theme.background,
           }}
         >
           <FlatList

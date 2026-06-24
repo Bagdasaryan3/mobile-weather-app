@@ -3,7 +3,7 @@ import { XIcon } from 'phosphor-react-native';
 import { useBookStore } from '../store/useBookStore';
 import { weatherIconMap } from '../data/icons';
 import { CloudWarningIcon } from 'phosphor-react-native';
-import { useDegreeStore } from '../store/useDegreeStore';
+import { useColorTheme } from '../hooks/useColorTheme';
 interface ISCCProps {
   cityName: string;
   temp: number;
@@ -13,29 +13,26 @@ interface ISCCProps {
 const SavedCityCard = ({ cityName, temp, icon }: ISCCProps) => {
   const removeSaved = useBookStore((state) => state.removeSaved);
 
-  const isDarkTheme = useDegreeStore((state) => state.isDarkTheme);
-
   const IconComponent =
     weatherIconMap[icon as keyof typeof weatherIconMap] || CloudWarningIcon;
+
+  const theme = useColorTheme();
 
   return (
     <View
       style={{
         ...styles.container,
-        backgroundColor: isDarkTheme ? '#1e212a' : '#f9f9f9',
+        backgroundColor: theme.card_color,
+        borderColor: theme.card_border_color,
       }}
     >
       <View style={styles.card}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <IconComponent
-            size={20}
-            weight="fill"
-            color={isDarkTheme ? '#E8EEFF' : '#313131'}
-          />
+          <IconComponent size={20} weight="fill" color={theme.main_text} />
           <Text
             style={{
               ...styles.cityName,
-              color: isDarkTheme ? '#E8EEFF' : '#313131',
+              color: theme.main_text,
             }}
           >
             {cityName}
@@ -63,10 +60,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 16,
     padding: 16,
-    backgroundColor: '#f9f9f9',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderWidth: 1,
   },
   card: {
     width: '92%',

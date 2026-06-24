@@ -28,6 +28,7 @@ import UpperInfo from '@/src/components/upperInfo';
 import InfoCard from '@/src/components/infoCard';
 import Mock from '@/src/components/mock';
 import { StatusBar } from 'react-native';
+import { useColorTheme } from '@/src/hooks/useColorTheme';
 
 export default function Index() {
   const getResponse = useResponseStore((state) => state.getResponse);
@@ -72,11 +73,13 @@ export default function Index() {
     getResponse();
   }, [locationName]);
 
+  const theme = useColorTheme();
+
   return (
     <View
       style={{
         ...styles.container,
-        backgroundColor: isDarkTheme ? '#1b1e27' : '#fafafa',
+        backgroundColor: theme.screen,
       }}
     >
       <SafeAreaView edges={['top']}>
@@ -86,15 +89,11 @@ export default function Index() {
 
         <View style={styles.header}>
           <View style={styles.headerTextContainer}>
-            <IconComponent
-              size={24}
-              weight="fill"
-              color={isDarkTheme ? '#E8EEFF' : '#313131'}
-            />
+            <IconComponent size={24} weight="fill" color={theme.main_text} />
             <Text
               style={{
                 ...styles.dateText,
-                color: isDarkTheme ? '#E8EEFF' : '#313131',
+                color: theme.main_text,
               }}
             >
               {city}
@@ -123,7 +122,7 @@ export default function Index() {
           <Mock />
         ) : (
           <ScrollView
-            style={{ backgroundColor: isDarkTheme ? '#101217' : '#f4f4f4' }}
+            style={{ backgroundColor: theme.background }}
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.weatherContainer}>
