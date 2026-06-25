@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'phosphor-react-native';
-import { useColorTheme } from '../hooks/useColorTheme';
+import { useColorTheme } from '../../hooks/useColorTheme';
+
 interface IProps {
   WeatherIcon: Icon;
   text: string;
@@ -8,7 +9,7 @@ interface IProps {
   color: string;
 }
 
-export default function InfoCard({
+export default function ForecastInfoCard({
   WeatherIcon,
   text,
   infoText,
@@ -19,13 +20,14 @@ export default function InfoCard({
     <View
       style={{
         ...styles.infoCard,
-        backgroundColor: theme.card_color,
+        backgroundColor: theme.forecast_info_card_color,
       }}
     >
       <View style={styles.infoCardTextContainer}>
-        <WeatherIcon weight="fill" size={20} color={color} />
+        <WeatherIcon weight="fill" size={18} color={color} />
         <Text style={{ ...styles.infoCardText, color: color }}>{text}</Text>
       </View>
+
       <Text style={{ ...styles.weatherInfoText, color: color }}>
         {infoText}
       </Text>
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 70,
+    height: 60,
     padding: 12,
     borderRadius: 20,
   },
@@ -50,11 +52,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   infoCardText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 500,
   },
   weatherInfoText: {
-    fontWeight: '700',
-    fontSize: 22,
+    fontWeight: '600',
+    fontSize: 18,
   },
 });

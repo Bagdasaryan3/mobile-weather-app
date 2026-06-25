@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, FlatList, Switch } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { CalendarDotsIcon } from 'phosphor-react-native';
-import ForecastCard from '@/src/components/forecastCard';
+import ForecastCard from '@/src/components/forecast/forecastCard';
 import { useColorTheme } from '@/src/hooks/useColorTheme';
 import { pageStyles } from '@/styles/page';
+import Header from '@/src/components/header';
 
 const Forecast = () => {
   const forecastList = useResponseStore((state) => state.response?.list);
@@ -18,19 +19,7 @@ const Forecast = () => {
       }}
     >
       <SafeAreaView edges={['top']}>
-        <View style={pageStyles.header}>
-          <View style={pageStyles.headerTextContainer}>
-            <CalendarDotsIcon size={24} weight="fill" color={theme.main_text} />
-            <Text
-              style={{
-                ...pageStyles.dateText,
-                color: theme.main_text,
-              }}
-            >
-              Forecast
-            </Text>
-          </View>
-        </View>
+        <Header IconComponent={CalendarDotsIcon} screenName="Forecast" />
 
         <View
           style={{

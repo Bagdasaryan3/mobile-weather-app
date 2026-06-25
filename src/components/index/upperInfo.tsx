@@ -5,16 +5,14 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import { usePlaceNameStore } from '../store/usePlaceNameStore';
-import { useResponseStore } from '../store/useResponseStore';
+import { usePlaceNameStore } from '../../store/usePlaceNameStore';
+import { useResponseStore } from '../../store/useResponseStore';
 import { MagnifyingGlassIcon } from 'phosphor-react-native';
-import { useColorTheme } from '../hooks/useColorTheme';
+import { useColorTheme } from '../../hooks/useColorTheme';
 
 export default function UpperInfo() {
-  const placeNameText = usePlaceNameStore((state) => state.placeNameText);
-  const setPlaceNameText = usePlaceNameStore((state) => state.setPlaceNameText);
-  const setPlaceName = usePlaceNameStore((state) => state.setPlaceName);
-  const setLastPlaceName = usePlaceNameStore((state) => state.setLastPlaceName);
+  const places = usePlaceNameStore();
+
   const getResponse = useResponseStore((state) => state.getResponse);
   const main = useResponseStore(
     (state) => state.response?.list[0].weather[0].main,
@@ -24,10 +22,10 @@ export default function UpperInfo() {
   );
 
   const submitCity = () => {
-    setPlaceName(placeNameText);
-    setLastPlaceName(placeNameText);
+    places.setPlaceName(places.placeNameText);
+    places.setLastPlaceName(places.placeNameText);
     getResponse();
-    setPlaceNameText('');
+    places.setPlaceNameText('');
   };
 
   const theme = useColorTheme();
@@ -48,8 +46,8 @@ export default function UpperInfo() {
           }}
           placeholder="Enter place name"
           placeholderTextColor={theme.text_input_placeholder_color}
-          onChangeText={(text) => setPlaceNameText(text)}
-          value={placeNameText}
+          onChangeText={(text) => places.setPlaceNameText(text)}
+          value={places.placeNameText}
         />
         <TouchableOpacity onPress={submitCity} style={styles.searchButton}>
           <MagnifyingGlassIcon size={22} color="#0088ff" />

@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { useResponseStore } from '../store/useResponseStore';
-import { useColorTheme } from '../hooks/useColorTheme';
+import { useResponseStore } from '../../store/useResponseStore';
+import { useColorTheme } from '../../hooks/useColorTheme';
+
 interface WeatherMapProps {
   cityName: string;
   temp: number;

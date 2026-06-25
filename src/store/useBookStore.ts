@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { OpenWeatherApiResponse } from '../types/datacontext.types';
+import type { OpenWeatherApiResponse } from '../types/response.types';
 
 interface IBookStore {
   cities: string[];

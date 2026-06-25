@@ -2,12 +2,13 @@ import { View, Image, Text, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BookIcon } from 'phosphor-react-native';
 import { useBookStore } from '@/src/store/useBookStore';
-import SavedCityCard from '@/src/components/savedCityCard';
+import SavedCityCard from '@/src/components/weather_book/savedCityCard';
 import { useEffect } from 'react';
 import { useSettingsStore } from '@/src/store/useSettingsStore';
 import { getWeather } from '@/src/api/getWeather';
 import { useColorTheme } from '@/src/hooks/useColorTheme';
 import { pageStyles } from '@/styles/page';
+import Header from '@/src/components/header';
 
 const Book = () => {
   const books = useBookStore();
@@ -36,19 +37,7 @@ const Book = () => {
       }}
     >
       <SafeAreaView edges={['top']}>
-        <View style={pageStyles.header}>
-          <View style={pageStyles.headerTextContainer}>
-            <BookIcon size={24} weight="fill" color={theme.main_text} />
-            <Text
-              style={{
-                ...pageStyles.dateText,
-                color: theme.main_text,
-              }}
-            >
-              Weather Book
-            </Text>
-          </View>
-        </View>
+        <Header IconComponent={BookIcon} screenName="Weather Book" />
 
         <View
           style={{

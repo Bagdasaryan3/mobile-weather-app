@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { XIcon } from 'phosphor-react-native';
-import { useBookStore } from '../store/useBookStore';
-import { weatherIconMap } from '../data/icons';
+import { useBookStore } from '../../store/useBookStore';
+import { weatherIconMap } from '../../data/icons';
 import { CloudWarningIcon } from 'phosphor-react-native';
-import { useColorTheme } from '../hooks/useColorTheme';
+import { useColorTheme } from '../../hooks/useColorTheme';
 interface ISCCProps {
   cityName: string;
   temp: number;

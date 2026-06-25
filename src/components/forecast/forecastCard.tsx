@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import type { WeatherForecastItem } from '../types/datacontext.types';
-import { weatherImageMap } from '../data/imgs';
-import { weatherIconMap } from '../data/icons';
+import type { WeatherForecastItem } from '../../types/response.types';
+import { weatherImageMap } from '../../data/imgs';
+import { weatherIconMap } from '../../data/icons';
 import {
   ClockIcon,
   WindIcon,
@@ -10,14 +10,14 @@ import {
 } from 'phosphor-react-native';
 import { PersonSimpleSwimIcon } from 'phosphor-react-native';
 import ForecastInfoCard from './forecastInfoCard';
-import { useColorTheme } from '../hooks/useColorTheme';
+import { useColorTheme } from '../../hooks/useColorTheme';
 
 const ForecastCard = (props: WeatherForecastItem) => {
   const { main, weather, wind, dt_txt } = props;
 
   const WeatherImage =
     weatherImageMap[weather[0].icon as keyof typeof weatherImageMap] ||
-    require('../../images/err.png');
+    require('../../../images/err.png');
 
   const IconComponent =
     weatherIconMap[weather[0].icon as keyof typeof weatherIconMap] ||

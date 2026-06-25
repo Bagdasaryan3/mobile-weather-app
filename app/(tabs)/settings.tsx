@@ -5,6 +5,7 @@ import { useSettingsStore } from '@/src/store/useSettingsStore';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { useColorTheme } from '@/src/hooks/useColorTheme';
 import { pageStyles } from '@/styles/page';
+import Header from '@/src/components/header';
 
 const Settings = () => {
   const settings = useSettingsStore();
@@ -26,19 +27,7 @@ const Settings = () => {
       }}
     >
       <SafeAreaView edges={['top']}>
-        <View style={pageStyles.header}>
-          <View style={pageStyles.headerTextContainer}>
-            <GearFineIcon size={24} weight="regular" color={theme.main_text} />
-            <Text
-              style={{
-                ...pageStyles.dateText,
-                color: theme.main_text,
-              }}
-            >
-              Settings
-            </Text>
-          </View>
-        </View>
+        <Header IconComponent={GearFineIcon} screenName="Settings" />
 
         <ScrollView
           style={{ width: '100%', height: '100%', paddingHorizontal: 20 }}

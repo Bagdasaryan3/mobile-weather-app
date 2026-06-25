@@ -15,21 +15,20 @@ import {
   CloudWarningIcon,
   WindIcon,
   MapPinAreaIcon,
-  BookmarkSimpleIcon,
 } from 'phosphor-react-native';
-import WeatherMap from '@/src/components/weatherMap';
+import WeatherMap from '@/src/components/index/weatherMap';
 import { weatherIconMap } from '@/src/data/icons';
 import { weatherImageMap } from '@/src/data/imgs';
 import { useResponseStore } from '@/src/store/useResponseStore';
 import { usePlaceNameStore } from '@/src/store/usePlaceNameStore';
 import { useSettingsStore } from '@/src/store/useSettingsStore';
-import { useBookStore } from '@/src/store/useBookStore';
-import UpperInfo from '@/src/components/upperInfo';
-import InfoCard from '@/src/components/infoCard';
+import UpperInfo from '@/src/components/index/upperInfo';
+import InfoCard from '@/src/components/index/infoCard';
 import Mock from '@/src/components/mock';
 import { StatusBar } from 'react-native';
 import { useColorTheme } from '@/src/hooks/useColorTheme';
 import { pageStyles } from '@/styles/page';
+import Header from '@/src/components/header';
 
 export default function Index() {
   const isDarkTheme = useSettingsStore((state) => state.isDarkTheme);
@@ -37,7 +36,6 @@ export default function Index() {
 
   const response = useResponseStore();
   const place = usePlaceNameStore();
-  const books = useBookStore();
 
   const city = useResponseStore((state) => state.response?.city.name);
   const temp = useResponseStore((state) => state.response?.list[0].main.temp);
@@ -74,40 +72,13 @@ export default function Index() {
       }}
     >
       <SafeAreaView edges={['top']}>
-        <StatusBar
-          barStyle={isDarkTheme ? 'light-content' : 'dark-content'} // иконки чёрные (и iOS тоже)
+        <StatusBar barStyle={isDarkTheme ? 'light-content' : 'dark-content'} />
+
+        <Header
+          IconComponent={IconComponent}
+          screenName={city}
+          isIndex={true}
         />
-
-        <View style={pageStyles.header}>
-          <View style={pageStyles.headerTextContainer}>
-            <IconComponent size={24} weight="fill" color={theme.main_text} />
-            <Text
-              style={{
-                ...pageStyles.dateText,
-                color: theme.main_text,
-              }}
-            >
-              {city}
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={styles.saveBtn}
-            onPress={() => books.toggleSavedCity(city ?? '')}
-          >
-            <BookmarkSimpleIcon
-              size={28}
-              weight="fill"
-              color={
-                books.cities.some((item) => item === city)
-                  ? '#ebce4f'
-                  : isDarkTheme
-                    ? '#33394a'
-                    : '#c9c9c9'
-              }
-            />
-          </TouchableOpacity>
-        </View>
 
         {response.responseStatus ? (
           <Mock />
@@ -218,10 +189,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 12,
-  },
-  saveBtn: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   weatherContainer: {
     width: '100%',
