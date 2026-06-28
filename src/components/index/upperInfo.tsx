@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   upperInfo: {
     width: '100%',
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 24,
     gap: 4,
   },
 

@@ -3,7 +3,7 @@ interface IDarkTheme {
   background: '#101217';
   main_text: '#E8EEFF';
   second_text: '#565d6f';
-  card_color: '#161920';
+  card_color: '#171b24';
   forecast_info_card_color: '#0f1115';
   text_input_color: '#101116';
   text_input_placeholder_color: '#3a4753';
@@ -16,12 +16,12 @@ interface ILightTheme {
   background: '#f2f2f2';
   main_text: '#313131';
   second_text: '#848484';
-  card_color: '#f9f9f9';
+  card_color: '#fcfcfc';
   forecast_info_card_color: '#f4f4f4';
   text_input_color: '#f2f2f2';
   text_input_placeholder_color: '#9f9f9f';
-  card_border_color: '#fcfcfc';
-  weather_info_card_color: '#fff';
+  card_border_color: '#ffffff';
+  weather_info_card_color: '#f8f8f8';
 }
 
 export interface ITheme {

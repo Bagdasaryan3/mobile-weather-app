@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 60,
     padding: 12,
-    borderRadius: 20,
+    borderRadius: 22,
   },
   infoCardTextContainer: {
     flexDirection: 'row',

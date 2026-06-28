@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 70,
-    padding: 12,
-    borderRadius: 20,
+    height: 60,
+    paddingHorizontal: 16,
+    borderRadius: 100,
   },
   infoCardTextContainer: {
     flexDirection: 'row',
